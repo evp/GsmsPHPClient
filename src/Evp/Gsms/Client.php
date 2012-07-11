@@ -94,7 +94,7 @@ class Evp_Gsms_Client
             throw new Evp_Gsms_Exception((string) $sxe->error);
         }
 
-        return new Evp_Gsms_QueryResult($sxe->status);
+        return new Evp_Gsms_QueryResult((string) $sxe->status);
     }
 
     /**
@@ -127,14 +127,14 @@ class Evp_Gsms_Client
      * Calls API action with specified params
      *
      * @param string $action
-     * @param array $params
+     * @param array  $params
      *
      * @return array
      */
     protected function call(array $params)
     {
         $params = array_merge($params, array(
-            'username' => $this->username,
+            'user'     => $this->username,
             'password' => $this->password,
         ));
 
