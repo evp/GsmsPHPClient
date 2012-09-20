@@ -14,6 +14,7 @@ class Evp_Gsms_Client
     const TYPE_SMS = 1;
     const TYPE_EMAIL = 3;
     const TYPE_WAPPUSH = 4;
+    const TYPE_COMBINED_SMS = 6;
 
     /**
      * API URI
