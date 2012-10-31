@@ -11,7 +11,7 @@ In short: this is a wrapper for the existing Gsms.lt API - [Download DOC format 
 * [Installation](#installation)
 * [Code samples](#code-samples)
 * [Additional notes](#additional-notes)
-* [Code samples](#contacts)
+* [Contact Us](#contacts)
 
 ##Requirements
 * An active gsms.lt account
