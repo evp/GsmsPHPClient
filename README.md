@@ -7,11 +7,11 @@ website if you are in possession of an active Gsms.lt account with a positive ba
 In short: this is a wrapper for the existing Gsms.lt API - [Download DOC format specification](https://www.gsms.lt/f/gsms_specifikacija.doc)
 
 ##Sections
-* [Requirements](##Requirements)
-* [Installation](##Installation)
-* [Code samples](##Code samples)
-* [Additional notes](##Additional notes)
-* [Code samples](##Contacts)
+* [Requirements](#requirements)
+* [Installation](#installation)
+* [Code samples](#code-samples)
+* [Additional notes](#additional-notes)
+* [Code samples](#contacts)
 
 ##Requirements
 * An active gsms.lt account
@@ -82,13 +82,8 @@ It is always a good idea to wrap a try-catch clause around your code in to antic
 If you have any further questions feel free to contact us:
 
 "EVP International", UAB
-
 Mėnulio g. 7
-
 LT-04326 Vilnius
-
 Email: pagalba@gsms.lt
-
 Tel. +370 (5) 2 03 27 19
-
 Faksas +370 (5) 2 63 91 79
