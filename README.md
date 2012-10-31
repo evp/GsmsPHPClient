@@ -1,5 +1,3 @@
-<img src='http://gsms.lt/sms/m/m_images/wfiles/ia43kt262.png'>
-
 #GsmsPhpClient
 
 ##What is GsmsPhpClient?
