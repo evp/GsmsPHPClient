@@ -20,26 +20,36 @@ class Evp_Gsms_Client
      *
      * @var string
      */
-    private $apiUri;
+    protected $apiUri;
 
     /**
      * Stores gsms.lt username
      *
      * @var string
      */
-    private $username;
+    protected $username;
 
     /**
      * Stores gsms.lt password
      *
      * @var string
      */
-    private $password;
+    protected $password;
 
     /**
      * @var string
      */
-    private $lastResponse;
+    protected $lastResponse;
+
+    /**
+     * @var string
+     */
+    protected $defaultCallbackUri;
+
+    /**
+     * @var string
+     */
+    protected $defaultFrom;
 
     /**
      * Class constructor
@@ -47,12 +57,16 @@ class Evp_Gsms_Client
      * @param string $username
      * @param string $password
      * @param string $apiUri
+     * @param string $defaultFrom        used in sendMessage method if from field is not set in message object
+     * @param string $defaultCallbackUri used in sendMessage method
      */
-    public function __construct($username, $password, $apiUri)
+    public function __construct($username, $password, $apiUri, $defaultFrom = null, $defaultCallbackUri = null)
     {
         $this->username = $username;
         $this->password = $password;
         $this->apiUri = $apiUri;
+        $this->defaultFrom = $defaultFrom;
+        $this->defaultCallbackUri = $defaultCallbackUri;
     }
 
     /**
@@ -131,6 +145,30 @@ class Evp_Gsms_Client
     }
 
     /**
+     * Send message. Similar to Evp_Gsms_Client::send, but takes message object as argument and uses default values
+     *
+     * @param Evp_Gsms_Message $message
+     *
+     * @return Evp_Gsms_QueryResult
+     */
+    public function sendMessage(Evp_Gsms_Message $message)
+    {
+        return $this->sendMessageObject($message, false);
+    }
+
+    /**
+     * Gets message info. Similar to Evp_Gsms_Client::info, but takes message object as argument and uses default values
+     *
+     * @param Evp_Gsms_Message $message
+     *
+     * @return Evp_Gsms_QueryResult
+     */
+    public function getMessageInfo(Evp_Gsms_Message $message)
+    {
+        return $this->sendMessageObject($message, true);
+    }
+
+    /**
      * Get last response
      *
      * @return string
@@ -143,17 +181,40 @@ class Evp_Gsms_Client
     /**
      * Returns configured service instance
      *
-     * @return Evp_Gsms_Client
+     * @param string $username
+     * @param string $password
+     * @param string $defaultCallbackUri
+     * @param string $defaultFrom
      *
-     * @static
+     * @return Evp_Gsms_Client
      */
-    public static function newInstance($username, $password)
+    public static function newInstance($username, $password, $defaultFrom = null, $defaultCallbackUri = null)
     {
         return new self(
             $username,
             $password,
-            'https://www.gsms.lt/remote.php?ru=bS9tX3Ntcy9hZG1pbi9yX2dhdGV3YXkucGhw'
+            'https://www.gsms.lt/remote.php?ru=bS9tX3Ntcy9hZG1pbi9yX2dhdGV3YXkucGhw',
+            $defaultFrom,
+            $defaultCallbackUri
         );
+    }
+
+    /**
+     * For internal use. Maps message object to arguments
+     *
+     * @param Evp_Gsms_Message $message
+     * @param boolean          $test
+     *
+     * @return Evp_Gsms_QueryResult
+     */
+    protected function sendMessageObject(Evp_Gsms_Message $message, $test)
+    {
+        $to = $message->getTo();
+        $text = $message->getText();
+        $from = $message->getFrom() ? $message->getFrom() : $this->defaultFrom;
+        $type = $message->getType();
+
+        return $this->send($from, $to, $text, $this->defaultCallbackUri, $type, $test);
     }
 
     /**
@@ -201,4 +262,5 @@ class Evp_Gsms_Client
 
         return $output;
     }
+
 }
