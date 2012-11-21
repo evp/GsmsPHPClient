@@ -56,7 +56,7 @@ class Evp_Gsms_Client
     }
 
     /**
-     * Sends SMS message to parner
+     * Sends SMS message to partner
      *
      * @param string $from
      * @param string $to
@@ -65,7 +65,10 @@ class Evp_Gsms_Client
      * @param string $type
      * @param bool   $test
      *
-     * @return mixed
+     * @return Evp_Gsms_QueryResult
+     *
+     * @throws Evp_Gsms_Exception
+     * @throws Evp_Gsms_Exception_InvalidResponse
      */
     public function send($from, $to, $message, $callbackUri = null, $type = null, $test = false)
     {
@@ -94,7 +97,37 @@ class Evp_Gsms_Client
             throw new Evp_Gsms_Exception((string) $sxe->error);
         }
 
-        return new Evp_Gsms_QueryResult((string) $sxe->status);
+        if ($test) {
+            $result = new Evp_Gsms_QueryResult(Evp_Gsms_QueryResult::STATUS_SUCCESS);
+            $result->setTest(true);
+        } else {
+            $result = new Evp_Gsms_QueryResult((string) $sxe->status);
+            $result->setSmsId((string) $sxe->smsid);
+        }
+
+        return $result
+            ->setCoverage((string) $sxe->coverage)
+            ->setPrice((int)(string) $sxe->price)
+            ->setBalance((int)(string) $sxe->balance)
+        ;
+    }
+
+    /**
+     * Gets information about SMS - price, coverage etc. Does not send the actual message.
+     *
+     * @param string $from
+     * @param string $to
+     * @param string $message
+     * @param string $type
+     *
+     * @return Evp_Gsms_QueryResult
+     *
+     * @throws Evp_Gsms_Exception
+     * @throws Evp_Gsms_Exception_InvalidResponse
+     */
+    public function info($from, $to, $message, $type = null)
+    {
+        return $this->send($from, $to, $message, null, $type, true);
     }
 
     /**
