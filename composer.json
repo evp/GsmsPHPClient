@@ -1,0 +1,13 @@
+{
+    "name": "evp/gsms-php-client",
+    "description": "gsms.lt API PHP client",
+    "authors": [
+        {
+            "name": "gsms.lt",
+            "homepage": "http://www.gsms.lt/"
+        }
+    ],
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
