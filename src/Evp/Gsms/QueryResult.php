@@ -46,7 +46,7 @@ class Evp_Gsms_QueryResult
     /**
      * @var array
      */
-    protected $smsIdList;
+    protected $smsIdList = array();
 
 
     /**
