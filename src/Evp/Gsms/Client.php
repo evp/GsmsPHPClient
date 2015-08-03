@@ -117,6 +117,11 @@ class Evp_Gsms_Client
         } else {
             $result = new Evp_Gsms_QueryResult((string) $sxe->status);
             $result->setSmsId((string) $sxe->smsid);
+            if (!empty($sxe->smsidlist) && !empty($sxe->smsidlist->smsid)) {
+                foreach ($sxe->smsidlist->smsid as $key => $value) {
+                    $result->addSmsIdToList((int)$value);
+                }
+            }
         }
 
         return $result
