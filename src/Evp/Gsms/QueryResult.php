@@ -43,6 +43,11 @@ class Evp_Gsms_QueryResult
      */
     protected $test = false;
 
+    /**
+     * @var array
+     */
+    protected $smsIdList = array();
+
 
     /**
      * Status code
@@ -192,5 +197,24 @@ class Evp_Gsms_QueryResult
     public function isTest()
     {
         return $this->test;
+    }
+
+    public function addSmsIdToList($smsId)
+    {
+        $this->smsIdList[] = $smsId;
+
+        return $this;
+    }
+
+    public function setSmsIdList($smsIdList)
+    {
+        $this->smsIdList = $smsIdList;
+
+        return $this;
+    }
+
+    public function getSmsIdList()
+    {
+        return $this->smsIdList;
     }
 }
