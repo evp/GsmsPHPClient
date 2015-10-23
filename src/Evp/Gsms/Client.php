@@ -52,6 +52,16 @@ class Evp_Gsms_Client
     protected $defaultFrom;
 
     /**
+     * @var string
+     */
+    protected $proxyHost;
+
+    /**
+     * @var int
+     */
+    protected $proxyPort;
+
+    /**
      * Class constructor
      *
      * @param string $username
@@ -248,6 +258,14 @@ class Evp_Gsms_Client
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Expect:"));
 
+        if ($this->proxyHost) {
+            curl_setopt($ch, CURLOPT_PROXY, $this->proxyHost);
+
+            if ($this->proxyPort) {
+                curl_setopt($ch, CURLOPT_PROXYPORT, $this->proxyPort);
+            }
+        }
+
         $output = $this->lastResponse = curl_exec($ch);
 
         try {
@@ -266,6 +284,20 @@ class Evp_Gsms_Client
         curl_close($ch);
 
         return $output;
+    }
+
+    public function setProxyHost($proxyHost)
+    {
+        $this->proxyHost = $proxyHost;
+
+        return $this;
+    }
+
+    public function setProxyPort($proxyPort)
+    {
+        $this->proxyPort = $proxyPort;
+
+        return $this;
     }
 
 }
